@@ -46,7 +46,7 @@ This application demonstrates several advanced software engineering patterns:
 
 ### 2. Start Infrastructure
 ## Terminal 1: Vector Database
-docker run -p 6333:6333 -p 6334:6334 -v "${PWD}/qdrant_storage:/qdrant/storage" qdrant/qdrant
+docker-compose up -d
 
 ## Terminal 2: Ollama Models
 ollama pull gemma4:e4b
