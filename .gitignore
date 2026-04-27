@@ -1,0 +1,16 @@
+# Credentials
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Local Data
+qdrant_storage/
+uploads/
+
+# Environments
+.python-version
+uv.lock
