@@ -1,4 +1,4 @@
-# 🏢 Nexus | Enterprise-Grade Local RAG Agent Assistant
+# 🏢 Nexus | Enterprise-Grade Local RAG AI Agent
 
 A robust, private, and fault-tolerant Retrieval-Augmented Generation (RAG) AI Agent designed for secure document intelligence. This project moves beyond standard demos by implementing an agentic workflow with asynchronous orchestration, deterministic data versioning, and a completely local inference stack.
 
