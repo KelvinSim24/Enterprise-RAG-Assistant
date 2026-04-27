@@ -50,4 +50,5 @@ docker-compose up -d
 
 ## Terminal 2: Ollama Models
 ollama pull gemma4:e4b
+
 ollama pull qwen3-embedding:4b
