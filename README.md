@@ -11,6 +11,7 @@ A robust, private, and fault-tolerant Retrieval-Augmented Generation (RAG) AI Ag
 ## Questions and Answered tested with accurate result
 
 <img width="1894" height="777" alt="image" src="https://github.com/user-attachments/assets/5d3527aa-0e28-4ac5-a234-517f959b5aa9" />
+
 <img width="1923" height="967" alt="image" src="https://github.com/user-attachments/assets/2241c8a6-c89d-49f4-8ddd-4aa28ad40761" />
 
 ## Inngest Server (Orchestrator) - Saved and Audited with every event happened within the application usage.
