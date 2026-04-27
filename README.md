@@ -45,9 +45,9 @@ This application demonstrates several advanced software engineering patterns:
 - Python 3.10+
 
 ### 2. Start Infrastructure
-# Terminal 1: Vector Database
+## Terminal 1: Vector Database
 docker run -p 6333:6333 -p 6334:6334 -v "${PWD}/qdrant_storage:/qdrant/storage" qdrant/qdrant
 
-# Terminal 2: Ollama Models
+## Terminal 2: Ollama Models
 ollama pull gemma4:e4b
 ollama pull qwen3-embedding:4b
