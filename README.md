@@ -1,41 +1,53 @@
-# 🏢 Enterprise RAG Assistant
+# 🏢 Nexus | Enterprise-Grade Local RAG Assistant
 
-A production-grade, fault-tolerant Retrieval-Augmented Generation (RAG) application.
+A robust, private, and fault-tolerant Retrieval-Augmented Generation (RAG) application. This project moves beyond "demo-ware" by implementing asynchronous orchestration, deterministic data versioning, and a completely local inference stack.
 
-Unlike standard RAG demos, this project is built for enterprise reliability. It utilizes **Inngest** for workflow orchestration (handling API rate limits, timeouts, and automatic retries), **Voyage AI** for state-of-the-art vector embeddings, a local **Qdrant** database for retrieval, and a local **Ollama (Gemma)** model to ensure complete data privacy during text generation.
+---
+## HomePage of RAG Application
+<img width="2549" height="1242" alt="image" src="https://github.com/user-attachments/assets/4de3fceb-f66a-466f-abfe-c3f2546522d5" />
 
-## 🧠 System Architecture
 
-1. **Frontend:** A premium, session-aware chat UI built with Streamlit.
-2. **Orchestration:** Inngest handles the asynchronous workflows. If a third-party API (like Voyage AI) drops the connection, Inngest automatically queues and retries the exact failing step without crashing the app.
-3. **Ingestion Pipeline:** Pydantic validates the data schema -> LlamaIndex parses and chunks PDFs -> Voyage AI generates 2048-dimensional embeddings -> Qdrant stores the vectors.
-4. **Query Pipeline:** User queries are embedded via Voyage AI -> Searched against Qdrant via Cosine Similarity -> Pushed to a local Ollama instance for secure, private text generation.
+## Questions and Answered tested with accurate result
+<img width="1894" height="777" alt="image" src="https://github.com/user-attachments/assets/5d3527aa-0e28-4ac5-a234-517f959b5aa9" />
+<img width="1923" height="967" alt="image" src="https://github.com/user-attachments/assets/2241c8a6-c89d-49f4-8ddd-4aa28ad40761" />
+
+## Inngest Server (Orchestrator) - Saved and Audited with every event happened within the application usage.
+<img width="2549" height="1242" alt="image" src="https://github.com/user-attachments/assets/86c44231-7147-4674-9de0-f5dfb0f829a0" />
+
+## 🧠 System Architecture & Techniques
+
+This application demonstrates several advanced software engineering patterns:
+
+* **Asynchronous Orchestration (Inngest):** Unlike standard RAG apps that fail on LLM timeouts, this uses an event-driven architecture. Ingestion and Querying are handled as managed "steps," allowing for automatic retries and state recovery.
+* **Vector Database Engineering (Qdrant):** Implements deterministic UUID generation (via `uuid5`) for vector IDs, ensuring "Upsert" idempotency and preventing duplicate data entries.
+* **Local-First Privacy:** Utilizes **Ollama** for both embeddings (`qwen3-embedding:4b`) and text generation (`gemma4:e4b`), ensuring zero data leakage of sensitive documents.
+* **Type-Safe Contracts:** Built with **Pydantic** to enforce strict data schemas across the entire pipeline, from Streamlit to the vector store.
+* **Contextual Grounding:** Low-temperature settings and strict system prompting to eliminate hallucinations and ensure factual precision.
+
+---
 
 ## 🛠️ Tech Stack
 
 - **Backend:** Python, FastAPI
-- **Orchestration:** Inngest
-- **Vector Database:** Qdrant (Dockerized)
-- **Embedding Model:** Voyage AI (`voyage-4-large`)
-- **LLM Engine:** Ollama (`gemma:9b`)
-- **Frontend:** Streamlit (Custom CSS injected)
+- **Orchestration:** Inngest (Local Dev Server)
+- **Vector DB:** Qdrant (Dockerized)
+- **Embedding Model:** `qwen3-embedding:4b`
+- **LLM Engine:** Ollama (`gemma4:e4b`)
+- **Frontend:** Streamlit with Custom CSS injection
 
 ---
 
 ## 🚀 Quick Start Guide
 
 ### 1. Prerequisites
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
-- [Ollama](https://ollama.com/) installed with the Gemma 9B model pulled (`ollama pull gemma:9b`).
-- Node.js installed (required for the Inngest Dev Server).
+- Docker Desktop installed.
+- Ollama installed.
 - Python 3.10+
 
-### 2. Environment Setup
+### 2. Start Infrastructure
+# Terminal 1: Vector Database
+docker run -p 6333:6333 -p 6334:6334 -v "${PWD}/qdrant_storage:/qdrant/storage" qdrant/qdrant
 
-Clone the repository and create a `.env` file in the root directory:
-
-```env
-VOYAGE_API_KEY=your_voyage_api_key_here
-ENVIRONMENT=development
-```
+# Terminal 2: Ollama Models
+ollama pull gemma4:e4b
+ollama pull qwen3-embedding:4b
